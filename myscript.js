@@ -1,4 +1,4 @@
-// Get a choice from the computer using math.random
+// // Get a choice from the computer using math.random
 function getComputerChoice() {
     let choice = (Math.floor(Math.random() * 3));
     switch (choice) {
@@ -14,10 +14,10 @@ function getComputerChoice() {
 }
 
 // Get a choice from the User using prompt
-function getHumanChoice() {
-    let choice = prompt("Rock, Paper, or Scissors?");
-    return choice.charAt(0).toUpperCase() + choice.slice(1);
-}
+// function getHumanChoice() {
+//     let choice = prompt("Rock, Paper, or Scissors?");
+//     return choice.charAt(0).toUpperCase() + choice.slice(1);
+// }
 
 // Plays a round and increments score depending on outcome of game
 function playRound(humanChoice, computerChoice) {
@@ -70,4 +70,15 @@ function playGame() {
     }
 }
 
-playGame();
+const btn = document.querySelectorAll("button");
+const result = document.querySelector("#result");
+
+btn.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const clickedElement = e.target;
+        const cpuChoice = getComputerChoice();
+        console.log(playRound(clickedElement.textContent, cpuChoice));
+    });
+});
+
+// playGame();
