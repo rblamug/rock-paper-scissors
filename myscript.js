@@ -36,49 +36,77 @@ function playRound(humanChoice, computerChoice) {
 
 
 // Play the game until either score reaches 5
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
+// function playGame() {
+//     let humanScore = 0;
+//     let computerScore = 0;
 
-    while (humanScore < 5 && computerScore < 5) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        let result = playRound(humanSelection, computerSelection);
+//     while (humanScore < 5 && computerScore < 5) {
+//         const humanSelection = getHumanChoice();
+//         const computerSelection = getComputerChoice();
+//         let result = playRound(humanSelection, computerSelection);
 
-        switch (result) {
-            case "Tie":
-                console.log("It's a Tie!");
-                console.log(`The score is You: ${humanScore} - CPU: ${computerScore}`)
-                break;
-            case "Win":
-                console.log(`You Win! ${humanSelection} beats ${computerSelection}`);
-                humanScore++;
-                console.log(`The score is You: ${humanScore} - CPU: ${computerScore}`)
-                break;
-            case "Lose":
-                console.log(`You Lose! ${computerSelection} beats ${humanSelection}`);
-                computerScore++;
-                console.log(`The score is You: ${humanScore} - CPU: ${computerScore}`)
-                break;
-            default:
-        }
-    }
-    if (humanScore === 5) {
-        console.log("Congratulations! You beat the computer!");
-    } else {
-        console.log("Sorry you lost to the computer... Try again.");
-    }
-}
+//         switch (result) {
+//             case "Tie":
+//                 console.log("It's a Tie!");
+//                 console.log(`The score is You: ${humanScore} - CPU: ${computerScore}`)
+//                 break;
+//             case "Win":
+//                 console.log(`You Win! ${humanSelection} beats ${computerSelection}`);
+//                 humanScore++;
+//                 console.log(`The score is You: ${humanScore} - CPU: ${computerScore}`)
+//                 break;
+//             case "Lose":
+//                 break;
+//             default:
+//         }
+//     }
+//     if (humanScore === 5) {
+//         console.log("Congratulations! You beat the computer!");
+//     } else {
+//         console.log("Sorry you lost to the computer... Try again.");
+//     }
+// }
 
 const btn = document.querySelectorAll("button");
-const result = document.querySelector("#result");
+const div = document.querySelector("#result");
+
+let humanScore = 0;
+let cpuScore = 0;
 
 btn.forEach(btn => {
     btn.addEventListener('click', (e) => {
         const clickedElement = e.target;
         const cpuChoice = getComputerChoice();
-        console.log(playRound(clickedElement.textContent, cpuChoice));
+        const result = playRound(clickedElement.textContent, cpuChoice);
+        div.textContent = result;
+
+        if (result === "Win") {
+            humanScore++
+            if (humanScore < 5) {
+                div.textContent = `You Win! ${clickedElement.textContent} beats ${cpuChoice}\n
+                The score is You: ${humanScore} - CPU: ${cpuScore}`;
+            } else {
+                div.textContent = "Congratulations! You beat the computer!";
+                humanScore = 0;
+                cpuScore = 0;            
+            }
+        }
+        else if (result === "Lose") {
+            cpuScore++
+            if (cpuScore < 5) {
+                div.textContent = `You Lose! ${cpuChoice} beats ${clickedElement.textContent}\n
+                The score is You: ${humanScore} - CPU ${cpuScore}`;    
+            } else {
+                div.textContent = "Sorry you lost to the computer... Try again.";
+                humanScore = 0;
+                cpuScore = 0;            
+            }
+        } else {
+            div.textContent = `It's a Tie!\n
+            The score is you: ${humanScore} - CPU ${cpuScore}`;
+        }
     });
 });
+
 
 // playGame();
